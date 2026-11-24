@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>STARTS Weihnachtsquiz 2026</title>
+<style>
+  :root{
+    --bg:#13201a; --bg2:#1b2d24; --karte:#fffdf8; --text:#1c1c1c; --hell:#f4efe4;
+    --rot:#c8102e; --gruen:#2e7d4f; --gold:#e3b341; --grau:#7b7b7b;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--hell);min-height:100vh;
+    background-image:radial-gradient(circle at 20% 10%,rgba(227,179,65,.08),transparent 40%),radial-gradient(circle at 80% 90%,rgba(200,16,46,.10),transparent 45%)}
+  .wrap{max-width:560px;margin:0 auto;padding:16px 16px 40px}
+  header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  header .logo{font-weight:800;letter-spacing:.04em}
+  header .logo span{color:var(--gold)}
+  header .ich{font-size:14px;opacity:.75}
+  .karte{background:var(--karte);color:var(--text);border-radius:18px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.25);margin-bottom:14px}
+  .runde{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--rot);font-weight:700}
+  .nr{font-size:13px;color:var(--grau);margin-top:2px}
+  h1{font-size:24px;margin:0 0 8px}
+  h2{font-size:21px;line-height:1.3;margin:10px 0 14px}
+  p{line-height:1.5}
+  .bild{width:100%;border-radius:12px;display:block;margin:6px 0 14px;background:#eee;max-height:280px;object-fit:contain}
+  .emoji{font-size:56px;text-align:center;margin:8px 0 14px;letter-spacing:.06em}
+  .opt{display:block;width:100%;text-align:left;font-size:17px;padding:14px 16px;margin:8px 0;border-radius:12px;border:2px solid #e2ddd2;background:#fff;color:var(--text);cursor:pointer}
+  .opt:active{transform:scale(.99)}
+  .opt.gewaehlt{border-color:var(--gold);background:#fff7e0}
+  .opt.richtig{border-color:var(--gruen);background:#e6f4ea}
+  .opt.falsch{border-color:var(--rot);background:#fbe7ea}
+  .opt[disabled]{cursor:default}
+  input[type=text],input[type=number],input[type=password]{width:100%;font-size:20px;padding:14px;border-radius:12px;border:2px solid #e2ddd2;margin:6px 0 10px}
+  .btn{display:block;width:100%;font-size:18px;font-weight:700;padding:15px;border-radius:12px;border:0;background:var(--rot);color:#fff;cursor:pointer;margin-top:8px}
+  .btn.zweit{background:#e9e4d8;color:var(--text)}
+  .btn.gruen{background:var(--gruen)}
+  .btn:disabled{opacity:.5}
+  .hinweis{font-size:14px;color:var(--grau)}
+  .gross{font-size:42px;font-weight:800;text-align:center;margin:6px 0}
+  .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:700}
+  .badge.ok{background:#e6f4ea;color:var(--gruen)} .badge.nein{background:#fbe7ea;color:var(--rot)} .badge.neutral{background:#eee;color:#555}
+  table{width:100%;border-collapse:collapse}
+  td{padding:9px 4px;border-bottom:1px solid #eee;font-size:16px}
+  td.p{width:36px;font-weight:800;color:var(--grau)} td.pkt{text-align:right;font-weight:800}
+  tr.ich td{background:#fff7e0}
+  .podest{display:flex;align-items:flex-end;justify-content:center;gap:8px;margin:16px 0 6px}
+  .podest div{flex:1;text-align:center;border-radius:12px 12px 0 0;padding:10px 4px;color:#fff;font-weight:800}
+  .podest .p1{background:var(--gold);height:150px} .podest .p2{background:#a8a8a8;height:115px} .podest .p3{background:#b87333;height:90px}
+  .podest small{display:block;font-weight:600;font-size:13px;margin-top:4px}
+  .admin-leiste{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .admin-leiste .btn{margin:0}
+  .zaehler{font-size:34px;font-weight:800}
+  .liste-spieler span{display:inline-block;background:#f1ece1;border-radius:999px;padding:5px 10px;margin:3px;font-size:14px}
+  .liste-spieler button{border:0;background:none;color:var(--rot);font-weight:800;cursor:pointer}
+  .schnee{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .schnee i{position:absolute;top:-10px;color:#fff;opacity:.5;animation:fall linear infinite}
+  @keyframes fall{to{transform:translateY(110vh)}}
+  .wrap{position:relative;z-index:1}
+  .fehler{background:#fbe7ea;color:var(--rot);padding:10px;border-radius:10px;font-size:14px;margin-top:8px}
+  .qr{display:block;margin:10px auto;background:#fff;padding:8px;border-radius:10px;width:220px;height:220px}
+</style>
+</head>
+<body>
+<div class="schnee" id="schnee"></div>
+<div class="wrap">
+  <header><div class="logo">STARTS <span>Weihnachtsquiz</span></div><div class="ich" id="ich"></div></header>
+  <div id="app"><div class="karte"><p>Lädt …</p></div></div>
+</div>
+
+<script>
+// ---------- Verbindung ----------
+const SB_URL = "https://adulwjumlqivycqzhkua.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFkdWx3anVtbHFpdnljcXpoa3VhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0NDY3NzQsImV4cCI6MjEwNDAyMjc3NH0.sLwDYZxDa28d4YmbxYBFRUgIdwWwl64Xe3YDoknB6PA";
+const H = {apikey: SB_KEY, Authorization: "Bearer " + SB_KEY, "Content-Type": "application/json"};
+
+async function sb(pfad, opt = {}) {
+  const r = await fetch(SB_URL + "/rest/v1/" + pfad, {...opt, headers: {...H, ...(opt.headers || {})}});
+  if (!r.ok) { const t = await r.text(); const e = new Error(t || r.statusText); e.status = r.status; throw e; }
+  const t = await r.text(); return t ? JSON.parse(t) : null;
+}
+const rpc = (name, body) => sb("rpc/" + name, {method: "POST", body: JSON.stringify(body)});
+
+// ---------- Fragen ----------
+const RUNDEN = [
+  {titel: "Runde 1: STARTS in Zahlen", gang: "Vorspeise"},
+  {titel: "Runde 2: Agentur-Wissen", gang: "Hauptgang"},
+  {titel: "Runde 3: Allgemeinwissen", gang: "Dessert"},
+];
+const EMOJI_FILME = ["Kevin allein zu Haus","Drei Haselnüsse für Aschenbrödel","Der Grinch","Der kleine Lord","Der Polarexpress","Die Eiskönigin","Schöne Bescherung","Buddy der Weihnachtself","Tatsächlich … Liebe","Die Muppets Weihnachtsgeschichte"];
+const LOGOS = ["Fahrschule Ferger","Ernst Krastel","Leihamt Mannheim","OPTIKHAUS Kaiser-Bode","Fahrschule Bock","Hallermeier"];
+
+const F = [
+  // Runde 1 (Schätzfragen)
+  {r:0, typ:"s", f:"Wie viele Webseiten haben wir aktuell im Hosting?", a:141},
+  {r:0, typ:"s", f:"Wie viele Webseiten sind 2026 live gegangen?", a:20},
+  {r:0, typ:"s", f:"Wie viele Stunden hat das Team 2026 in awork erfasst?", a:10317},
+  {r:0, typ:"s", f:"Wie viele Erstgespräche hatten wir 2026?", a:82},
+  {r:0, typ:"s", f:"Wie viele Stunden stecken im Kundenprojekt mit den meisten Stunden 2026?", a:316, info:"Beltz Verlag, Social Media Betreuung"},
+  // Runde 2 (Logos)
+  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo1_ausschnitt.png", voll:"img/logo1_voll.png", o:["Fahrschule Ferger","Fahrschule Bock","Hallermeier","OPTIKHAUS Kaiser-Bode"]},
+  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo2_ausschnitt.png", voll:"img/logo2_voll.png", o:["Ernst Krastel","Leihamt Mannheim","Hallermeier","Fahrschule Ferger"]},
+  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo3_ausschnitt.png", voll:"img/logo3_voll.png", o:["Leihamt Mannheim","OPTIKHAUS Kaiser-Bode","Ernst Krastel","Fahrschule Bock"]},
+  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo4_ausschnitt.png", voll:"img/logo4_voll.png", o:["OPTIKHAUS Kaiser-Bode","Hallermeier","Leihamt Mannheim","Ernst Krastel"]},
+  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo5_ausschnitt.png", voll:"img/logo5_voll.png", o:["Hallermeier","Leihamt Mannheim","Fahrschule Bock","Ernst Krastel"]},
+  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo6_ausschnitt.png", voll:"img/logo6_voll.png", o:["Fahrschule Bock","Fahrschule Ferger","OPTIKHAUS Kaiser-Bode","Ernst Krastel"]},
+  // Runde 2 (Begriffe)
+  {r:1, typ:"m", f:"Was ist JSON?", o:["Ein Datenformat für den Datenaustausch","Jasons kleiner Bruder","Ein Rabattcode für JavaScript"]},
+  {r:1, typ:"m", f:"Wofür steht CTA?", o:["Call to Action","Cookie-Tracking-Abfrage","Chef trinkt Altbier"]},
+  {r:1, typ:"m", f:"Was bedeutet „Headless“?", o:["Frontend und CMS sind getrennt","Eine Webseite ohne Header","Ein Webdesigner nach der dritten Korrekturschleife"]},
+  {r:1, typ:"m", f:"Wofür steht DNS?", o:["Domain Name System","Digitaler Netzwerk-Speicher","Deutscher Newsletter-Service","„Datei nicht speichern“"]},
+  {r:1, typ:"m", f:"Was ist eine Staging-Umgebung?", o:["Eine Testversion der Webseite vor dem Livegang","Der Bühnenaufbau für eine Kundenpräsentation","Eine Rechnung in mehreren Stufen"]},
+  {r:1, typ:"m", f:"Was misst die Bounce Rate?", o:["Den Anteil der Besucher, die ohne Interaktion wieder abspringen","Wie oft ein Kunde ein Angebot zurückschickt","Wie oft ein Kunde „Kann das Logo noch größer?“ fragt"]},
+  // Runde 3: Jahresrückblick
+  {r:2, typ:"m", f:"Wer ist Fußball-Weltmeister 2026?", o:["Spanien","Argentinien","Frankreich","England"]},
+  {r:2, typ:"m", f:"Wer hat das Siegtor im WM-Finale geschossen?", o:["Ferran Torres","Lamine Yamal","Nico Williams","Álvaro Morata"], info:"106. Minute, 1:0 nach Verlängerung gegen Argentinien"},
+  {r:2, typ:"s", f:"Wie viele Spiele hatte die WM 2026 insgesamt?", a:104, info:"Erstmals mit 48 Teams"},
+  {r:2, typ:"m", f:"Welches Land hat den Eurovision Song Contest 2026 in Wien gewonnen?", o:["Bulgarien","Israel","Italien","Rumänien"], info:"Dara mit „Bangaranga“, Bulgariens erster Sieg überhaupt"},
+  {r:2, typ:"s", f:"Auf welchem Platz landete Deutschland beim ESC 2026?", a:23},
+  {r:2, typ:"m", f:"Wo fanden die Olympischen Winterspiele 2026 statt?", o:["Mailand und Cortina d'Ampezzo","Innsbruck","St. Moritz und Davos","Chamonix"]},
+  {r:2, typ:"m", f:"Welche Nation hat den Medaillenspiegel der Winterspiele 2026 gewonnen?", o:["Norwegen","Deutschland","USA","Italien"]},
+  {r:2, typ:"s", f:"Wie viele Medaillen hat Deutschland bei den Winterspielen 2026 geholt?", a:26, info:"8 Gold, 10 Silber, 8 Bronze, Platz 5 im Medaillenspiegel"},
+  // Runde 3: Odenwald
+  {r:2, typ:"m", f:"Wie heißt der höchste Berg des Odenwalds?", o:["Katzenbuckel","Melibokus","Tromm","Neunkircher Höhe"]},
+  {r:2, typ:"m", f:"Welcher Sagenheld soll im Odenwald an einer Quelle ermordet worden sein?", o:["Siegfried","Hagen","Dietrich von Bern","Gunther"], info:"Grasellenbach beansprucht die Quelle für sich"},
+  {r:2, typ:"s", f:"Aus wie vielen Ortsteilen besteht Grasellenbach?", a:6, info:"Gras-Ellenbach, Wahlen, Hammelbach, Litzelbach, Scharbach, Tromm"},
+  {r:2, typ:"m", f:"Wahlen war bis 1983 die Endstation welcher Bahnstrecke?", o:["Überwaldbahn","Weschnitztalbahn","Odenwaldbahn","Nibelungenbahn"]},
+  {r:2, typ:"m", f:"Welcher Grasellenbacher Ortsteil ist das höchstgelegene Dorf im Odenwald?", o:["Tromm","Hammelbach","Scharbach","Litzelbach"]},
+  // Runde 3: Weihnachten
+  {r:2, typ:"m", f:"In welchem Land isst man an Weihnachten traditionell KFC?", o:["Japan","USA","Südkorea","Australien"]},
+  {r:2, typ:"m", f:"Welches Land schenkt London jedes Jahr den Weihnachtsbaum für den Trafalgar Square?", o:["Norwegen","Dänemark","Kanada","Schweden"]},
+  {r:2, typ:"m", f:"Welcher Weihnachtssong ist die meistverkaufte Single aller Zeiten?", o:["White Christmas","Last Christmas","All I Want for Christmas Is You","Jingle Bell Rock"], info:"Bing Crosby"},
+  {r:2, typ:"m", f:"Wer hat den Adventskranz erfunden?", o:["Johann Hinrich Wichern","Martin Luther","Die Brüder Grimm","Ein Gärtner aus Erfurt"], info:"1839 in Hamburg"},
+  {r:2, typ:"m", f:"Welche Stadt ist für ihren Christkindlesmarkt und ihre Lebkuchen berühmt?", o:["Nürnberg","Dresden","Aachen","Köln"]},
+  {r:2, typ:"s", f:"Wie viele Rentiere ziehen den Schlitten des Weihnachtsmanns, ohne Rudolph?", a:8},
+  // Runde 3: Emoji-Filme
+  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"🏠🧒😱", o:["Kevin allein zu Haus","Schöne Bescherung","Der kleine Lord","Buddy der Weihnachtself"]},
+  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"👸🐴🌰🌰🌰", o:["Drei Haselnüsse für Aschenbrödel","Die Eiskönigin","Der kleine Lord","Die Muppets Weihnachtsgeschichte"]},
+  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"💚😠🎄🎁", o:["Der Grinch","Buddy der Weihnachtself","Schöne Bescherung","Der Polarexpress"]},
+  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"👦🎩🏰👴", o:["Der kleine Lord","Kevin allein zu Haus","Tatsächlich … Liebe","Drei Haselnüsse für Aschenbrödel"]},
+  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"🚂❄️🎅🔔", o:["Der Polarexpress","Der Grinch","Die Eiskönigin","Schöne Bescherung"]},
+  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"❄️👸⛄", o:["Die Eiskönigin","Drei Haselnüsse für Aschenbrödel","Der Polarexpress","Tatsächlich … Liebe"]},
+];
+// Die erste Option ist immer die richtige; angezeigt wird gemischt (fest je Frage, für alle gleich).
+function gemischt(i) {
+  const q = F[i]; if (q.typ !== "m") return [];
+  const arr = q.o.slice(); let a = (i + 144) * 2654435761 >>> 0;
+  const zufall = () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  for (let k = arr.length - 1; k > 0; k--) { const j = Math.floor(zufall() * (k + 1)); [arr[k], arr[j]] = [arr[j], arr[k]]; }
+  return arr;
+}
+const richtig = i => F[i].typ === "m" ? F[i].o[0] : String(F[i].a);
+const fmt = n => Number(n).toLocaleString("de-DE");
+function zahl(t) { if (t == null) return NaN; return Number(String(t).replace(/\s/g, "").replace(/\./g, "").replace(",", ".")); }
+
+// ---------- Punkte ----------
+// Multiple Choice: 1 Punkt. Schätzfragen: nächster Tipp 3, zweitnächster 2, drittnächster 1 (Gleichstand zählt gleich).
+function punkteFrage(i, antworten) {
+  const q = F[i], p = {}, liste = antworten.filter(a => a.frage === i);
+  if (q.typ === "m") { liste.forEach(a => { p[a.spieler_id] = a.antwort === q.o[0] ? 1 : 0; }); return p; }
+  const abst = liste.map(a => ({id: a.spieler_id, d: Math.abs(zahl(a.antwort) - q.a)})).filter(x => !isNaN(x.d)).sort((x, y) => x.d - y.d);
+  liste.forEach(a => p[a.spieler_id] = 0);
+  abst.forEach(x => { const rang = abst.filter(y => y.d < x.d).length; p[x.id] = rang === 0 ? 3 : rang === 1 ? 2 : rang === 2 ? 1 : 0; });
+  return p;
+}
+function rangliste(spieler, antworten, bisFrage) {
+  const sum = {}; spieler.forEach(s => sum[s.id] = 0);
+  for (let i = 0; i <= bisFrage; i++) { const p = punkteFrage(i, antworten); for (const id in p) if (id in sum) sum[id] += p[id]; }
+  return spieler.map(s => ({...s, punkte: sum[s.id]})).sort((a, b) => b.punkte - a.punkte || a.name.localeCompare(b.name));
+}
+function letzteGewerteteFrage(st) {
+  if (st.frage < 0) return -1;
+  return ["aufgeloest", "rangliste", "ende"].includes(st.phase) ? st.frage : st.frage - 1;
+}
+
+// ---------- Zustand ----------
+const IST_ADMIN = new URLSearchParams(location.search).has("admin");
+let ich = JSON.parse(localStorage.getItem("quiz_ich") || "null");
+let meine = JSON.parse(localStorage.getItem("quiz_meine") || "{}");
+let pin = localStorage.getItem("quiz_pin") || "";
+let st = null, spieler = [], antworten = [], anzahl = 0, letzterSchluessel = "", fehlerText = "";
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function speichereMeine() { localStorage.setItem("quiz_meine", JSON.stringify(meine)); }
+
+async function laden() {
+  try {
+    const [s] = await sb("quiz_status?select=frage,phase,aktualisiert&id=eq.1");
+    st = s;
+    spieler = await sb("quiz_spieler?select=id,name&order=erstellt");
+    if (st.phase !== "offen" || IST_ADMIN) antworten = await sb("quiz_antworten?select=spieler_id,frage,antwort");
+    if (IST_ADMIN && st.frage >= 0) anzahl = await rpc("quiz_anzahl", {p_frage: st.frage});
+    if (!IST_ADMIN && ich && !spieler.some(s => s.id === ich.id)) { ich = null; localStorage.removeItem("quiz_ich"); }
+    fehlerText = "";
+  } catch (e) { fehlerText = "Verbindung hakt, versuche es weiter …"; }
+  zeichnen();
+}
+
+// ---------- Ansichten Spieler ----------
+function kopfFrage(i) {
+  const q = F[i], r = RUNDEN[q.r];
+  const nrInRunde = F.slice(0, i + 1).filter(x => x.r === q.r).length, gesamtRunde = F.filter(x => x.r === q.r).length;
+  return `<div class="runde">${esc(r.titel)}</div><div class="nr">Frage ${nrInRunde} von ${gesamtRunde}${q.typ === "s" ? " · Schätzfrage" : ""}</div>
+    <h2>${esc(q.f)}</h2>${q.bild ? `<img class="bild" src="${q.bild}" alt="">` : ""}${q.emoji ? `<div class="emoji">${q.emoji}</div>` : ""}`;
+}
+
+function ansichtAnmelden() {
+  return `<div class="karte"><h1>Willkommen! 🎄</h1><p>Gib Deinen Namen ein, dann geht's los. Am besten Vorname, bei zwei Hannahs gern mit Initial.</p>
+    <input type="text" id="name" maxlength="30" placeholder="Dein Name" autocomplete="off">
+    <button class="btn" onclick="anmelden()">Mitspielen</button>${fehlerText ? `<div class="fehler">${esc(fehlerText)}</div>` : ""}</div>`;
+}
+async function anmelden() {
+  const name = document.getElementById("name").value.trim();
+  if (!name) return;
+  if (spieler.some(s => s.name.toLowerCase() === name.toLowerCase())) { fehlerText = "Den Namen gibt's schon. Bitte mit Initial ergänzen."; letzterSchluessel = ""; zeichnen(); return; }
+  const id = crypto.randomUUID();
+  try { await sb("quiz_spieler", {method: "POST", body: JSON.stringify({id, name}), headers: {Prefer: "return=minimal"}}); }
+  catch (e) { fehlerText = "Hat nicht geklappt, bitte nochmal."; letzterSchluessel = ""; zeichnen(); return; }
+  ich = {id, name}; localStorage.setItem("quiz_ich", JSON.stringify(ich)); meine = {}; speichereMeine();
+  letzterSchluessel = ""; laden();
+}
+
+function ansichtSpieler() {
+  if (!ich) return ansichtAnmelden();
+  const i = st.frage, q = F[i];
+  if (st.phase === "lobby") return `<div class="karte"><h1>Hallo ${esc(ich.name)}! 👋</h1><p>Gleich geht's los. Warte, bis die erste Frage freigegeben wird.</p>
+      <p class="hinweis">${spieler.length} ${spieler.length === 1 ? "Person ist" : "Leute sind"} schon dabei.</p></div>`;
+  if (st.phase === "rangliste" || st.phase === "ende") return ansichtRangliste(st.phase === "ende");
+  if (!q) return `<div class="karte"><p>Moment …</p></div>`;
+  const mein = meine[i];
+  if (st.phase === "offen") {
+    if (mein != null) return `<div class="karte">${kopfFrage(i)}<p>Deine Antwort: <b>${esc(q.typ === "s" ? fmt(zahl(mein)) : mein)}</b> ✅</p><p class="hinweis">Warte auf die anderen …</p></div>`;
+    if (q.typ === "m") return `<div class="karte">${kopfFrage(i)}${gemischt(i).map(o => `<button class="opt" onclick='antworten_(${i}, ${JSON.stringify(o).replace(/'/g, "&#39;")})'>${esc(o)}</button>`).join("")}</div>`;
+    return `<div class="karte">${kopfFrage(i)}<input type="number" inputmode="numeric" id="tipp" placeholder="Deine Schätzung">
+      <button class="btn" onclick="tippen(${i})">Schätzung abgeben</button>${fehlerText ? `<div class="fehler">${esc(fehlerText)}</div>` : ""}</div>`;
+  }
+  if (st.phase === "zu") return `<div class="karte">${kopfFrage(i)}<p>Die Antworten sind geschlossen. 🔒</p>
+      <p>${mein != null ? `Deine Antwort: <b>${esc(q.typ === "s" ? fmt(zahl(mein)) : mein)}</b>` : "Du hast diesmal nicht geantwortet."}</p></div>`;
+  if (st.phase === "aufgeloest") return `<div class="karte">${ansichtAufloesung(i, true)}</div>`;
+  return "";
+}
+
+function ansichtAufloesung(i, alsSpieler) {
+  const q = F[i], p = punkteFrage(i, antworten), mein = alsSpieler ? meine[i] : null;
+  let h = `<div class="runde">${esc(RUNDEN[q.r].titel)}</div><h2>${esc(q.f)}</h2>`;
+  if (q.voll) h += `<img class="bild" src="${q.voll}" alt="">`;
+  if (q.emoji) h += `<div class="emoji">${q.emoji}</div>`;
+  if (q.typ === "m") {
+    h += gemischt(i).map(o => `<button class="opt ${o === q.o[0] ? "richtig" : (o === mein ? "falsch" : "")}" disabled>${esc(o)}${o === q.o[0] ? " ✔︎" : ""}</button>`).join("");
+  } else {
+    h += `<div class="gross">${fmt(q.a)}</div>`;
+    const tipps = antworten.filter(a => a.frage === i).map(a => ({name: (spieler.find(s => s.id === a.spieler_id) || {}).name || "?", t: zahl(a.antwort), p: p[a.spieler_id] || 0}))
+      .filter(x => !isNaN(x.t)).sort((a, b) => Math.abs(a.t - q.a) - Math.abs(b.t - q.a)).slice(0, 3);
+    if (tipps.length) h += `<p class="hinweis">Am nächsten dran:</p><table>${tipps.map(t => `<tr><td>${esc(t.name)}</td><td>${fmt(t.t)}</td><td class="pkt">+${t.p}</td></tr>`).join("")}</table>`;
+  }
+  if (q.info) h += `<p class="hinweis">${esc(q.info)}</p>`;
+  if (alsSpieler) {
+    const pk = p[ich.id];
+    if (mein == null) h += `<p><span class="badge neutral">Keine Antwort</span></p>`;
+    else h += `<p>Deine Antwort: <b>${esc(q.typ === "s" ? fmt(zahl(mein)) : mein)}</b> &nbsp; <span class="badge ${pk ? "ok" : "nein"}">${pk ? "+" + pk + (pk === 1 ? " Punkt" : " Punkte") : "0 Punkte"}</span></p>`;
+  }
+  return h;
+}
+
+function ansichtRangliste(ende) {
+  const r = rangliste(spieler, antworten, letzteGewerteteFrage(st));
+  let h = `<div class="karte">`;
+  if (ende) {
+    h += `<h1>🏆 Endstand</h1><div class="podest">
+      <div class="p2">2<small>${esc(r[1] ? r[1].name : "")}</small></div>
+      <div class="p1">1<small>${esc(r[0] ? r[0].name : "")}</small></div>
+      <div class="p3">3<small>${esc(r[2] ? r[2].name : "")}</small></div></div>`;
+  } else h += `<h1>Zwischenstand</h1>`;
+  let platz = 0, vorher = null;
+  h += `<table>${r.map((s, k) => { if (s.punkte !== vorher) { platz = k + 1; vorher = s.punkte; }
+    return `<tr class="${ich && s.id === ich.id ? "ich" : ""}"><td class="p">${platz}.</td><td>${esc(s.name)}</td><td class="pkt">${s.punkte}</td></tr>`; }).join("")}</table></div>`;
+  return h;
+}
+
+async function antworten_(i, o) {
+  if (meine[i] != null) return;
+  meine[i] = o; speichereMeine(); letzterSchluessel = ""; zeichnen();
+  try { await sb("quiz_antworten", {method: "POST", body: JSON.stringify({spieler_id: ich.id, frage: i, antwort: o}), headers: {Prefer: "return=minimal"}}); }
+  catch (e) { if (e.status !== 409) { delete meine[i]; speichereMeine(); fehlerText = "Zu spät oder Verbindung weg. Antwort nicht gezählt."; } letzterSchluessel = ""; zeichnen(); }
+}
+async function tippen(i) {
+  const v = zahl(document.getElementById("tipp").value);
+  if (isNaN(v)) { fehlerText = "Bitte eine Zahl eingeben."; letzterSchluessel = ""; zeichnen(); return; }
+  fehlerText = ""; await antworten_(i, String(v));
+}
+
+// ---------- Ansicht Moderator ----------
+function ansichtAdmin() {
+  if (!pin) return `<div class="karte"><h1>Moderation</h1><p>PIN eingeben:</p><input type="password" inputmode="numeric" id="pin">
+     <button class="btn" onclick="pinPruefen()">Weiter</button>${fehlerText ? `<div class="fehler">${esc(fehlerText)}</div>` : ""}</div>`;
+  const i = st.frage, q = F[i], letzte = F.length - 1;
+  const link = location.origin + location.pathname;
+  let h = `<div class="karte"><div class="runde">Moderation</div>`;
+  if (st.phase === "lobby") {
+    h += `<h2>Lobby</h2><p>Spieler öffnen:<br><b>${esc(link)}</b></p>
+      <img class="qr" alt="QR-Code" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(link)}">`;
+  } else if (q) {
+    const nrInRunde = F.slice(0, i + 1).filter(x => x.r === q.r).length;
+    h += `<div class="nr">${esc(RUNDEN[q.r].titel)} · Frage ${nrInRunde} · gesamt ${i + 1}/${F.length}</div>
+      <h2>${esc(q.f)}</h2>${q.emoji ? `<div class="emoji" style="font-size:36px">${q.emoji}</div>` : ""}
+      <p>Lösung: <b>${esc(q.typ === "s" ? fmt(q.a) : q.o[0])}</b>${q.info ? `<br><span class="hinweis">${esc(q.info)}</span>` : ""}</p>
+      <p>Status: <span class="badge neutral">${{offen: "Antworten offen", zu: "Geschlossen", aufgeloest: "Aufgelöst", rangliste: "Zwischenstand", ende: "Endstand"}[st.phase]}</span></p>
+      <div class="zaehler">${anzahl} / ${spieler.length} <span class="hinweis" style="font-size:15px;font-weight:400">haben geantwortet</span></div>`;
+  }
+  h += `<div class="admin-leiste" style="margin-top:12px">`;
+  const b = (txt, fn, cls = "") => `<button class="btn ${cls}" onclick="${fn}">${txt}</button>`;
+  if (st.phase === "lobby") h += b("Quiz starten ▶", "steuern(0,'offen')", "gruen") + `<div></div>`;
+  if (st.phase === "offen") h += b("Antworten schließen 🔒", `steuern(${i},'zu')`) + b("Zurück", `steuern(${i},'lobby')`, "zweit");
+  if (st.phase === "zu") h += b("Auflösen 💡", `steuern(${i},'aufgeloest')`, "gruen") + b("Wieder öffnen", `steuern(${i},'offen')`, "zweit");
+  if (st.phase === "aufgeloest" || st.phase === "rangliste") {
+    if (i < letzte) {
+      const rundenende = F[i + 1].r !== q.r;
+      h += b(rundenende ? "Nächste Runde ▶" : "Nächste Frage ▶", `steuern(${i + 1},'offen')`, "gruen");
+    } else h += b("Endstand 🏆", `steuern(${i},'ende')`, "gruen");
+    h += st.phase === "rangliste" ? b("Zur Auflösung", `steuern(${i},'aufgeloest')`, "zweit") : b("Zwischenstand", `steuern(${i},'rangliste')`, "zweit");
+  }
+  if (st.phase === "ende") h += b("Zurück zur letzten Frage", `steuern(${i},'aufgeloest')`, "zweit") + `<div></div>`;
+  h += `</div>`;
+  if (st.phase !== "lobby" && i > 0) h += `<button class="btn zweit" onclick="steuern(${i - 1},'aufgeloest')">◀ Vorherige Frage</button>`;
+  if (st.phase === "aufgeloest") h += `<hr style="margin:18px 0;border:0;border-top:1px solid #eee">${ansichtAufloesung(i, false)}`;
+  h += `</div>`;
+  if (st.phase === "rangliste" || st.phase === "ende") h += ansichtRangliste(st.phase === "ende");
+  h += `<div class="karte"><b>Spieler (${spieler.length})</b><div class="liste-spieler">${spieler.map(s => `<span>${esc(s.name)} <button onclick="entfernen('${s.id}','${esc(s.name).replace(/'/g, "")}')">×</button></span>`).join("")}</div>
+     <button class="btn zweit" style="margin-top:14px" onclick="zuruecksetzen()">Quiz komplett zurücksetzen</button>
+     ${fehlerText ? `<div class="fehler">${esc(fehlerText)}</div>` : ""}</div>`;
+  return h;
+}
+async function pinPruefen() {
+  const v = document.getElementById("pin").value.trim();
+  try { if (await rpc("quiz_pin_ok", {p_pin: v})) { pin = v; localStorage.setItem("quiz_pin", v); fehlerText = ""; } else fehlerText = "Falsche PIN."; }
+  catch (e) { fehlerText = "Verbindung hakt."; }
+  letzterSchluessel = ""; laden();
+}
+async function steuern(frage, phase) {
+  try { await rpc("quiz_steuern", {p_pin: pin, p_frage: frage, p_phase: phase}); }
+  catch (e) { fehlerText = "Hat nicht geklappt: " + e.message; }
+  letzterSchluessel = ""; laden();
+}
+async function entfernen(id, name) {
+  if (!confirm(name + " aus dem Quiz entfernen?")) return;
+  await rpc("quiz_spieler_entfernen", {p_pin: pin, p_id: id}); letzterSchluessel = ""; laden();
+}
+async function zuruecksetzen() {
+  if (!confirm("Wirklich alles zurücksetzen? Alle Spieler und Antworten werden gelöscht.")) return;
+  await rpc("quiz_zuruecksetzen", {p_pin: pin}); letzterSchluessel = ""; laden();
+}
+
+// ---------- Zeichnen ----------
+function zeichnen() {
+  if (!st) { app.innerHTML = `<div class="karte"><p>${fehlerText || "Lädt …"}</p></div>`; return; }
+  document.getElementById("ich").textContent = IST_ADMIN ? "Moderation" : (ich ? ich.name : "");
+  // Nicht neu zeichnen, solange sich nichts geändert hat (sonst verliert das Eingabefeld den Fokus).
+  const schluessel = JSON.stringify([st.frage, st.phase, spieler.length, antworten.length, anzahl, !!ich, !!pin, fehlerText, IST_ADMIN ? spieler.map(s => s.id) : 0]);
+  if (schluessel === letzterSchluessel) return;
+  const aktiv = document.activeElement;
+  if (aktiv && aktiv.tagName === "INPUT" && aktiv.value && letzterSchluessel.startsWith(JSON.stringify([st.frage, st.phase]).slice(0, -1))) return;
+  letzterSchluessel = schluessel;
+  app.innerHTML = IST_ADMIN ? ansichtAdmin() : ansichtSpieler();
+}
+
+// Schnee
+(function () { const s = document.getElementById("schnee"); for (let k = 0; k < 24; k++) { const e = document.createElement("i"); e.textContent = "❄"; e.style.left = Math.random() * 100 + "%";
+  e.style.fontSize = (8 + Math.random() * 12) + "px"; e.style.animationDuration = (8 + Math.random() * 10) + "s"; e.style.animationDelay = (-Math.random() * 15) + "s"; s.appendChild(e); } })();
+
+laden();
+setInterval(laden, IST_ADMIN ? 1500 : 2000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) laden(); });
+</script>
+</body>
+</html>
