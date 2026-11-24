@@ -94,54 +94,54 @@ const LOGOS = ["Fahrschule Ferger","Ernst Krastel","Leihamt Mannheim","OPTIKHAUS
 
 const F = [
   // Runde 1 (Schätzfragen)
-  {r:0, typ:"s", f:"Wie viele Webseiten haben wir aktuell im Hosting?", a:141},
-  {r:0, typ:"s", f:"Wie viele Webseiten sind 2026 live gegangen?", a:20},
-  {r:0, typ:"s", f:"Wie viele Stunden hat das Team 2026 in awork erfasst?", a:10317},
-  {r:0, typ:"s", f:"Wie viele Erstgespräche hatten wir 2026?", a:82},
-  {r:0, typ:"s", f:"Wie viele Stunden stecken im Kundenprojekt mit den meisten Stunden 2026?", a:316, info:"Beltz Verlag, Social Media Betreuung"},
+  {b:"STARTS in Zahlen", r:0, typ:"s", f:"Wie viele Webseiten haben wir aktuell im Hosting?", a:141},
+  {b:"STARTS in Zahlen", r:0, typ:"s", f:"Wie viele Webseiten sind 2026 live gegangen?", a:20},
+  {b:"STARTS in Zahlen", r:0, typ:"s", f:"Wie viele Stunden hat das Team 2026 in awork erfasst?", a:10317},
+  {b:"STARTS in Zahlen", r:0, typ:"s", f:"Wie viele Erstgespräche hatten wir 2026?", a:82},
+  {b:"STARTS in Zahlen", r:0, typ:"s", f:"Wie viele Stunden stecken im Kundenprojekt mit den meisten Stunden 2026?", a:316, info:"Beltz Verlag, Social Media Betreuung"},
   // Runde 2 (Logos)
-  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo1_ausschnitt.png", voll:"img/logo1_voll.png", o:["Fahrschule Ferger","Autohaus Schollenberger","Containerdienst Überwald","Logwin Logistik"]},
-  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo2_ausschnitt.png", voll:"img/logo2_voll.png", o:["Ernst Krastel","Lukauer Heizung & Sanitär","Philipp Unger Energietechnik","Riedl Bau"]},
-  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo3_ausschnitt.png", voll:"img/logo3_voll.png", o:["Leihamt Mannheim","Volksbank Weschnitztal","MRP Versicherungsmakler","Steuerkanzlei Rhena Wolf"]},
-  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo4_ausschnitt.png", voll:"img/logo4_voll.png", o:["OPTIKHAUS Kaiser-Bode","Logopädie Scheidelmann","Sonnenberger Akademie","Heike Knapp"]},
-  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo5_ausschnitt.png", voll:"img/logo5_voll.png", o:["Hallermeier","HOTZ Kommunikation","nexcon IT","Meto International"]},
-  {r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo6_ausschnitt.png", voll:"img/logo6_voll.png", o:["Fahrschule Bock","KOPP Schleiftechnik","Toptas Bodenbeläge","Jantz Metallbau"]},
+  {b:"Kundenlogos", r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo1_ausschnitt.png", voll:"img/logo1_voll.png", o:["Fahrschule Ferger","Autohaus Schollenberger","Containerdienst Überwald","Logwin Logistik"]},
+  {b:"Kundenlogos", r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo2_ausschnitt.png", voll:"img/logo2_voll.png", o:["Ernst Krastel","Lukauer Heizung & Sanitär","Philipp Unger Energietechnik","Riedl Bau"]},
+  {b:"Kundenlogos", r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo3_ausschnitt.png", voll:"img/logo3_voll.png", o:["Leihamt Mannheim","Volksbank Weschnitztal","MRP Versicherungsmakler","Steuerkanzlei Rhena Wolf"]},
+  {b:"Kundenlogos", r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo4_ausschnitt.png", voll:"img/logo4_voll.png", o:["OPTIKHAUS Kaiser-Bode","Logopädie Scheidelmann","Sonnenberger Akademie","Heike Knapp"]},
+  {b:"Kundenlogos", r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo5_ausschnitt.png", voll:"img/logo5_voll.png", o:["Hallermeier","HOTZ Kommunikation","nexcon IT","Meto International"]},
+  {b:"Kundenlogos", r:1, typ:"m", f:"Wessen Logo ist das?", bild:"img/logo6_ausschnitt.png", voll:"img/logo6_voll.png", o:["Fahrschule Bock","KOPP Schleiftechnik","Toptas Bodenbeläge","Jantz Metallbau"]},
   // Runde 2 (Begriffe)
-  {r:1, typ:"m", f:"Was ist JSON?", o:["Ein Datenformat für den Datenaustausch","Jasons kleiner Bruder","Ein Rabattcode für JavaScript"]},
-  {r:1, typ:"m", f:"Wofür steht CTA?", o:["Call to Action","Cookie-Tracking-Abfrage","Chef trinkt Altbier"]},
-  {r:1, typ:"m", f:"Was bedeutet „Headless“?", o:["Frontend und CMS sind getrennt","Eine Webseite ohne Header","Ein Webdesigner nach der dritten Korrekturschleife"]},
-  {r:1, typ:"m", f:"Wofür steht DNS?", o:["Domain Name System","Digitaler Netzwerk-Speicher","Deutscher Newsletter-Service","„Datei nicht speichern“"]},
-  {r:1, typ:"m", f:"Was ist eine Staging-Umgebung?", o:["Eine Testversion der Webseite vor dem Livegang","Der Bühnenaufbau für eine Kundenpräsentation","Eine Rechnung in mehreren Stufen"]},
-  {r:1, typ:"m", f:"Was misst die Bounce Rate?", o:["Den Anteil der Besucher, die ohne Interaktion wieder abspringen","Wie oft ein Kunde ein Angebot zurückschickt","Wie oft ein Kunde „Kann das Logo noch größer?“ fragt"]},
+  {b:"Agentur-Begriffe", r:1, typ:"m", f:"Was ist JSON?", o:["Ein Datenformat für den Datenaustausch","Jasons kleiner Bruder","Ein Rabattcode für JavaScript"]},
+  {b:"Agentur-Begriffe", r:1, typ:"m", f:"Wofür steht CTA?", o:["Call to Action","Cookie-Tracking-Abfrage","Chef trinkt Altbier"]},
+  {b:"Agentur-Begriffe", r:1, typ:"m", f:"Was bedeutet „Headless“?", o:["Frontend und CMS sind getrennt","Eine Webseite ohne Header","Ein Webdesigner nach der dritten Korrekturschleife"]},
+  {b:"Agentur-Begriffe", r:1, typ:"m", f:"Wofür steht DNS?", o:["Domain Name System","Digitaler Netzwerk-Speicher","Deutscher Newsletter-Service","„Datei nicht speichern“"]},
+  {b:"Agentur-Begriffe", r:1, typ:"m", f:"Was ist eine Staging-Umgebung?", o:["Eine Testversion der Webseite vor dem Livegang","Der Bühnenaufbau für eine Kundenpräsentation","Eine Rechnung in mehreren Stufen"]},
+  {b:"Agentur-Begriffe", r:1, typ:"m", f:"Was misst die Bounce Rate?", o:["Den Anteil der Besucher, die ohne Interaktion wieder abspringen","Wie oft ein Kunde ein Angebot zurückschickt","Wie oft ein Kunde „Kann das Logo noch größer?“ fragt"]},
   // Runde 3: Jahresrückblick
-  {r:2, typ:"m", f:"Wer ist Fußball-Weltmeister 2026?", o:["Spanien","Argentinien","Frankreich","England"]},
-  {r:2, typ:"m", f:"Wer hat das Siegtor im WM-Finale geschossen?", o:["Ferran Torres","Lamine Yamal","Nico Williams","Álvaro Morata"], info:"106. Minute, 1:0 nach Verlängerung gegen Argentinien"},
-  {r:2, typ:"s", f:"Wie viele Spiele hatte die WM 2026 insgesamt?", a:104, info:"Erstmals mit 48 Teams"},
-  {r:2, typ:"m", f:"Welches Land hat den Eurovision Song Contest 2026 in Wien gewonnen?", o:["Bulgarien","Israel","Italien","Rumänien"], info:"Dara mit „Bangaranga“, Bulgariens erster Sieg überhaupt"},
-  {r:2, typ:"s", f:"Auf welchem Platz landete Deutschland beim ESC 2026?", a:23},
-  {r:2, typ:"m", f:"Wo fanden die Olympischen Winterspiele 2026 statt?", o:["Mailand und Cortina d'Ampezzo","Innsbruck","St. Moritz und Davos","Chamonix"]},
-  {r:2, typ:"m", f:"Welche Nation hat den Medaillenspiegel der Winterspiele 2026 gewonnen?", o:["Norwegen","Deutschland","USA","Italien"]},
-  {r:2, typ:"s", f:"Wie viele Medaillen hat Deutschland bei den Winterspielen 2026 geholt?", a:26, info:"8 Gold, 10 Silber, 8 Bronze, Platz 5 im Medaillenspiegel"},
+  {b:"Jahresrückblick 2026", r:2, typ:"m", f:"Wer ist Fußball-Weltmeister 2026?", o:["Spanien","Argentinien","Frankreich","England"]},
+  {b:"Jahresrückblick 2026", r:2, typ:"m", f:"Wer hat das Siegtor im WM-Finale geschossen?", o:["Ferran Torres","Lamine Yamal","Nico Williams","Álvaro Morata"], info:"106. Minute, 1:0 nach Verlängerung gegen Argentinien"},
+  {b:"Jahresrückblick 2026", r:2, typ:"s", f:"Wie viele Spiele hatte die WM 2026 insgesamt?", a:104, info:"Erstmals mit 48 Teams"},
+  {b:"Jahresrückblick 2026", r:2, typ:"m", f:"Welches Land hat den Eurovision Song Contest 2026 in Wien gewonnen?", o:["Bulgarien","Israel","Italien","Rumänien"], info:"Dara mit „Bangaranga“, Bulgariens erster Sieg überhaupt"},
+  {b:"Jahresrückblick 2026", r:2, typ:"s", f:"Auf welchem Platz landete Deutschland beim ESC 2026?", a:23},
+  {b:"Jahresrückblick 2026", r:2, typ:"m", f:"Wo fanden die Olympischen Winterspiele 2026 statt?", o:["Mailand und Cortina d'Ampezzo","Innsbruck","St. Moritz und Davos","Chamonix"]},
+  {b:"Jahresrückblick 2026", r:2, typ:"m", f:"Welche Nation hat den Medaillenspiegel der Winterspiele 2026 gewonnen?", o:["Norwegen","Deutschland","USA","Italien"]},
+  {b:"Jahresrückblick 2026", r:2, typ:"s", f:"Wie viele Medaillen hat Deutschland bei den Winterspielen 2026 geholt?", a:26, info:"8 Gold, 10 Silber, 8 Bronze, Platz 5 im Medaillenspiegel"},
   // Runde 3: Odenwald
-  {r:2, typ:"m", f:"Wie heißt der höchste Berg des Odenwalds?", o:["Katzenbuckel","Melibokus","Tromm","Neunkircher Höhe"]},
-  {r:2, typ:"m", f:"Welcher Sagenheld soll im Odenwald an einer Quelle ermordet worden sein?", o:["Siegfried","Hagen","Dietrich von Bern","Gunther"], info:"Grasellenbach beansprucht die Quelle für sich"},
-  {r:2, typ:"s", f:"Aus wie vielen Ortsteilen besteht Grasellenbach?", a:6, info:"Gras-Ellenbach, Wahlen, Hammelbach, Litzelbach, Scharbach, Tromm"},
-  {r:2, typ:"m", f:"Wahlen war bis 1983 die Endstation welcher Bahnstrecke?", o:["Überwaldbahn","Weschnitztalbahn","Odenwaldbahn","Nibelungenbahn"]},
-  {r:2, typ:"m", f:"Welcher Grasellenbacher Ortsteil ist das höchstgelegene Dorf im Odenwald?", o:["Tromm","Hammelbach","Scharbach","Litzelbach"]},
+  {b:"Odenwald & Grasellenbach", r:2, typ:"m", f:"Wie heißt der höchste Berg des Odenwalds?", o:["Katzenbuckel","Melibokus","Tromm","Neunkircher Höhe"]},
+  {b:"Odenwald & Grasellenbach", r:2, typ:"m", f:"Welcher Sagenheld soll im Odenwald an einer Quelle ermordet worden sein?", o:["Siegfried","Hagen","Dietrich von Bern","Gunther"], info:"Grasellenbach beansprucht die Quelle für sich"},
+  {b:"Odenwald & Grasellenbach", r:2, typ:"s", f:"Aus wie vielen Ortsteilen besteht Grasellenbach?", a:6, info:"Gras-Ellenbach, Wahlen, Hammelbach, Litzelbach, Scharbach, Tromm"},
+  {b:"Odenwald & Grasellenbach", r:2, typ:"m", f:"Wahlen war bis 1983 die Endstation welcher Bahnstrecke?", o:["Überwaldbahn","Weschnitztalbahn","Odenwaldbahn","Nibelungenbahn"]},
+  {b:"Odenwald & Grasellenbach", r:2, typ:"m", f:"Welcher Grasellenbacher Ortsteil ist das höchstgelegene Dorf im Odenwald?", o:["Tromm","Hammelbach","Scharbach","Litzelbach"]},
   // Runde 3: Weihnachten
-  {r:2, typ:"m", f:"In welchem Land isst man an Weihnachten traditionell KFC?", o:["Japan","USA","Südkorea","Australien"]},
-  {r:2, typ:"m", f:"Welches Land schenkt London jedes Jahr den Weihnachtsbaum für den Trafalgar Square?", o:["Norwegen","Dänemark","Kanada","Schweden"]},
-  {r:2, typ:"m", f:"Welcher Weihnachtssong ist die meistverkaufte Single aller Zeiten?", o:["White Christmas","Last Christmas","All I Want for Christmas Is You","Jingle Bell Rock"], info:"Bing Crosby"},
-  {r:2, typ:"m", f:"Wer hat den Adventskranz erfunden?", o:["Johann Hinrich Wichern","Martin Luther","Die Brüder Grimm","Ein Gärtner aus Erfurt"], info:"1839 in Hamburg"},
-  {r:2, typ:"m", f:"Welche Stadt ist für ihren Christkindlesmarkt und ihre Lebkuchen berühmt?", o:["Nürnberg","Dresden","Aachen","Köln"]},
-  {r:2, typ:"s", f:"Wie viele Rentiere ziehen den Schlitten des Weihnachtsmanns, ohne Rudolph?", a:8},
+  {b:"Weihnachten", r:2, typ:"m", f:"In welchem Land isst man an Weihnachten traditionell KFC?", o:["Japan","USA","Südkorea","Australien"]},
+  {b:"Weihnachten", r:2, typ:"m", f:"Welches Land schenkt London jedes Jahr den Weihnachtsbaum für den Trafalgar Square?", o:["Norwegen","Dänemark","Kanada","Schweden"]},
+  {b:"Weihnachten", r:2, typ:"m", f:"Welcher Weihnachtssong ist die meistverkaufte Single aller Zeiten?", o:["White Christmas","Last Christmas","All I Want for Christmas Is You","Jingle Bell Rock"], info:"Bing Crosby"},
+  {b:"Weihnachten", r:2, typ:"m", f:"Wer hat den Adventskranz erfunden?", o:["Johann Hinrich Wichern","Martin Luther","Die Brüder Grimm","Ein Gärtner aus Erfurt"], info:"1839 in Hamburg"},
+  {b:"Weihnachten", r:2, typ:"m", f:"Welche Stadt ist für ihren Christkindlesmarkt und ihre Lebkuchen berühmt?", o:["Nürnberg","Dresden","Aachen","Köln"]},
+  {b:"Weihnachten", r:2, typ:"s", f:"Wie viele Rentiere ziehen den Schlitten des Weihnachtsmanns, ohne Rudolph?", a:8},
   // Runde 3: Emoji-Filme
-  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"🏠🧒😱", o:["Kevin allein zu Haus","Schöne Bescherung","Der kleine Lord","Buddy der Weihnachtself"]},
-  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"👸🐴🌰🌰🌰", o:["Drei Haselnüsse für Aschenbrödel","Die Eiskönigin","Der kleine Lord","Die Muppets Weihnachtsgeschichte"]},
-  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"💚😠🎄🎁", o:["Der Grinch","Buddy der Weihnachtself","Schöne Bescherung","Der Polarexpress"]},
-  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"👦🎩🏰👴", o:["Der kleine Lord","Kevin allein zu Haus","Tatsächlich … Liebe","Drei Haselnüsse für Aschenbrödel"]},
-  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"🚂❄️🎅🔔", o:["Der Polarexpress","Der Grinch","Die Eiskönigin","Schöne Bescherung"]},
-  {r:2, typ:"m", f:"Welcher Film ist das?", emoji:"❄️👸⛄", o:["Die Eiskönigin","Drei Haselnüsse für Aschenbrödel","Der Polarexpress","Tatsächlich … Liebe"]},
+  {b:"Emoji-Filme", r:2, typ:"m", f:"Welcher Film ist das?", emoji:"🏠🧒😱", o:["Kevin allein zu Haus","Schöne Bescherung","Der kleine Lord","Buddy der Weihnachtself"]},
+  {b:"Emoji-Filme", r:2, typ:"m", f:"Welcher Film ist das?", emoji:"👸🐴🌰🌰🌰", o:["Drei Haselnüsse für Aschenbrödel","Die Eiskönigin","Der kleine Lord","Die Muppets Weihnachtsgeschichte"]},
+  {b:"Emoji-Filme", r:2, typ:"m", f:"Welcher Film ist das?", emoji:"💚😠🎄🎁", o:["Der Grinch","Buddy der Weihnachtself","Schöne Bescherung","Der Polarexpress"]},
+  {b:"Emoji-Filme", r:2, typ:"m", f:"Welcher Film ist das?", emoji:"👦🎩🏰👴", o:["Der kleine Lord","Kevin allein zu Haus","Tatsächlich … Liebe","Drei Haselnüsse für Aschenbrödel"]},
+  {b:"Emoji-Filme", r:2, typ:"m", f:"Welcher Film ist das?", emoji:"🚂❄️🎅🔔", o:["Der Polarexpress","Der Grinch","Die Eiskönigin","Schöne Bescherung"]},
+  {b:"Emoji-Filme", r:2, typ:"m", f:"Welcher Film ist das?", emoji:"❄️👸⛄", o:["Die Eiskönigin","Drei Haselnüsse für Aschenbrödel","Der Polarexpress","Tatsächlich … Liebe"]},
 ];
 // Die erste Option ist immer die richtige; angezeigt wird gemischt (fest je Frage, für alle gleich).
 function gemischt(i) {
@@ -204,7 +204,7 @@ async function laden() {
 function kopfFrage(i) {
   const q = F[i], r = RUNDEN[q.r];
   const nrInRunde = F.slice(0, i + 1).filter(x => x.r === q.r).length, gesamtRunde = F.filter(x => x.r === q.r).length;
-  return `<div class="runde">${esc(r.titel)}</div><div class="nr">Frage ${nrInRunde} von ${gesamtRunde}${q.typ === "s" ? " · Schätzfrage" : ""}</div>
+  return `<div class="runde">${esc(r.titel)}</div><div class="nr">${new Set(F.filter(x => x.r === q.r).map(x => x.b)).size > 1 ? esc(q.b) + " · " : ""}Frage ${nrInRunde} von ${gesamtRunde}${q.typ === "s" ? " · Schätzfrage" : ""}</div>
     <h2>${esc(q.f)}</h2>${q.bild ? `<img class="bild" src="${q.bild}" alt="">` : ""}${q.emoji ? `<div class="emoji">${q.emoji}</div>` : ""}`;
 }
 
@@ -276,7 +276,7 @@ function ansichtRangliste(ende) {
       <div class="p2">2<small>${esc(r[1] ? r[1].name : "")}</small></div>
       <div class="p1">1<small>${esc(r[0] ? r[0].name : "")}</small></div>
       <div class="p3">3<small>${esc(r[2] ? r[2].name : "")}</small></div></div>`;
-  } else h += `<h1>Zwischenstand</h1>`;
+  } else h += `<h1>Zwischenstand</h1>${st.frage >= 0 && F[st.frage] ? `<p class="hinweis">nach „${esc(F[st.frage].b)}“</p>` : ""}`;
   let platz = 0, vorher = null;
   h += `<table>${r.map((s, k) => { if (s.punkte !== vorher) { platz = k + 1; vorher = s.punkte; }
     return `<tr class="${ich && s.id === ich.id ? "ich" : ""}"><td class="p">${platz}.</td><td>${esc(s.name)}</td><td class="pkt">${s.punkte}</td></tr>`; }).join("")}</table></div>`;
@@ -334,11 +334,14 @@ function ansichtAdmin() {
   if (st.phase === "offen") h += b("Antworten schließen 🔒", `steuern(${i},'zu')`) + b("Zurück", `steuern(${i},'lobby')`, "zweit");
   if (st.phase === "zu") h += b("Auflösen 💡", `steuern(${i},'aufgeloest')`, "gruen") + b("Wieder öffnen", `steuern(${i},'offen')`, "zweit");
   if (st.phase === "aufgeloest" || st.phase === "rangliste") {
-    if (i < letzte) {
-      const rundenende = F[i + 1].r !== q.r;
-      h += b(rundenende ? "Nächste Runde ▶" : "Nächste Frage ▶", `steuern(${i + 1},'offen')`, "gruen");
-    } else h += b("Endstand 🏆", `steuern(${i},'ende')`, "gruen");
-    h += st.phase === "rangliste" ? b("Zur Auflösung", `steuern(${i},'aufgeloest')`, "zweit") : b("Zwischenstand", `steuern(${i},'rangliste')`, "zweit");
+    const blockende = i < letzte && F[i + 1].b !== q.b, rundenende = i < letzte && F[i + 1].r !== q.r;
+    if (i === letzte) h += b("Endstand 🏆", `steuern(${i},'ende')`, "gruen") + b("Zwischenstand", `steuern(${i},'rangliste')`, "zweit");
+    else if (blockende && st.phase === "aufgeloest") h += b("Zwischenstand 📊", `steuern(${i},'rangliste')`, "gruen") + b("Nächste Frage ▶", `steuern(${i + 1},'offen')`, "zweit");
+    else {
+      h += b(rundenende ? "Nächste Runde ▶" : blockende ? "Nächster Block ▶" : "Nächste Frage ▶", `steuern(${i + 1},'offen')`, "gruen");
+      h += st.phase === "rangliste" ? b("Zur Auflösung", `steuern(${i},'aufgeloest')`, "zweit") : b("Zwischenstand", `steuern(${i},'rangliste')`, "zweit");
+    }
+    if (blockende) h += `<p class="hinweis" style="grid-column:1/-1;margin:4px 0 0">Ende Block „${esc(q.b)}“. Als Nächstes: ${rundenende ? esc(RUNDEN[F[i + 1].r].titel) + " (" + RUNDEN[F[i + 1].r].gang + ")" : "„" + esc(F[i + 1].b) + "“"}</p>`;
   }
   if (st.phase === "ende") h += b("Zurück zur letzten Frage", `steuern(${i},'aufgeloest')`, "zweit") + `<div></div>`;
   h += `</div>`;
